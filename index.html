@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hi, Stranger 😊</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        background-color: #fff5f5;
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+
+      #container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      h1 {
+        color: #ff6b6b;
+        margin-bottom: 30px;
+      }
+
+      #flowerButton {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        margin-bottom: 30px;
+      }
+
+      #flowerButton:hover {
+        background-color: #ff8e8e;
+        transform: scale(1.05);
+      }
+
+      #flowerCanvas {
+        margin: 20px auto;
+        display: block;
+      }
+
+      #message {
+        font-size: 30px;
+        font-weight: bolder;
+        color: #555;
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 1s;
+        font-style: italic;
+        line-height: 1.6;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .flower {
+        position: absolute;
+        transition: transform 2s;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .heart {
+        color: #ff6b6b;
+        font-size: 24px;
+        display: inline-block;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.3);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>For Someone... <span class="heart">♥</span></h1>
+      <button id="flowerButton">Click for a Surprise!</button>
+      <canvas
+        id="flowerCanvas"
+        width="400"
+        height="400"
+        class="hidden"
+      ></canvas>
+      <div id="message"></div>
+    </div>
+
+    <script>
+      const button = document.getElementById("flowerButton");
+      const canvas = document.getElementById("flowerCanvas");
+      const ctx = canvas.getContext("2d");
+      const messageDiv = document.getElementById("message");
+
+      const romanticMessages = [
+        "Sending you a virtual flower 🌷… because I ran out of small talk. You’re welcome. 😏",
+        "Proof I can be romantic… when I want to be. 🌹😉",
+        "This flower is 100% allergy-free. Unlike my charm. 😌🌼",
+        "Just thought you could use a little color today. 🌸✨",
+        "No deep meaning here… just wanted to make you smile. 🌻😊",
+        "I’d give you real flowers, but this way you don’t have to pretend to like them. 🌺😂",
+      ];
+
+      button.addEventListener("click", function () {
+        // Show the canvas
+        canvas.classList.remove("hidden");
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw multiple flowers
+        for (let i = 0; i < 5; i++) {
+          drawFlower(
+            100 + i * 100,
+            200,
+            30 + Math.random() * 20,
+            getRandomColor()
+          );
+        }
+
+        // Draw some falling petals
+        drawFallingPetals();
+
+        // Show a random romantic message
+        const randomMessage =
+          romanticMessages[Math.floor(Math.random() * romanticMessages.length)];
+        messageDiv.textContent = randomMessage;
+        messageDiv.style.opacity = 1;
+
+        // Change button text
+        button.textContent = "Click Again for More Flowers!";
+      });
+
+      function drawFlower(x, y, size, color) {
+        // Stem
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x, y + 100);
+        ctx.strokeStyle = "#4CAF50";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Leaves
+        ctx.beginPath();
+        ctx.ellipse(x + 10, y + 60, 15, 8, Math.PI / 4, 0, Math.PI * 2);
+        ctx.fillStyle = "#4CAF50";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x - 10, y + 30, 15, 8, -Math.PI / 4, 0, Math.PI * 2);
+        ctx.fillStyle = "#4CAF50";
+        ctx.fill();
+
+        // Flower center
+        ctx.beginPath();
+        ctx.arc(x, y, size / 3, 0, Math.PI * 2);
+        ctx.fillStyle = "#FFD700";
+        ctx.fill();
+
+        // Petals
+        const petalColors = [
+          color,
+          lightenColor(color, 20),
+          darkenColor(color, 10),
+        ];
+
+        for (let i = 0; i < 8; i++) {
+          const angle = (i / 8) * Math.PI * 2;
+          const petalX = x + Math.cos(angle) * size;
+          const petalY = y + Math.sin(angle) * size;
+
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.quadraticCurveTo(
+            x + Math.cos(angle) * size * 0.7,
+            y + Math.sin(angle) * size * 0.7,
+            petalX,
+            petalY
+          );
+          ctx.quadraticCurveTo(
+            x + Math.cos(angle + Math.PI / 8) * size * 0.7,
+            y + Math.sin(angle + Math.PI / 8) * size * 0.7,
+            x,
+            y
+          );
+
+          // Alternate petal colors for more realism
+          ctx.fillStyle = petalColors[i % petalColors.length];
+          ctx.fill();
+        }
+      }
+
+      function drawFallingPetals() {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const x = Math.random() * canvas.width;
+            const size = 5 + Math.random() * 10;
+            const color = getRandomColor();
+
+            // Animate falling
+            let y = -10;
+            const fallInterval = setInterval(() => {
+              ctx.clearRect(
+                x - size - 2,
+                y - size - 2,
+                size * 2 + 4,
+                size * 2 + 4
+              );
+              y += 2;
+
+              if (y > canvas.height) {
+                clearInterval(fallInterval);
+              } else {
+                drawPetal(x, y, size, color);
+              }
+            }, 50);
+          }, i * 300);
+        }
+      }
+
+      function drawPetal(x, y, size, color) {
+        ctx.beginPath();
+        ctx.ellipse(
+          x,
+          y,
+          size,
+          size / 2,
+          Math.random() * Math.PI,
+          0,
+          Math.PI * 2
+        );
+        ctx.fillStyle = color;
+        ctx.fill();
+      }
+
+      function getRandomColor() {
+        const colors = [
+          "#FF6B6B",
+          "#FF8E8E",
+          "#FFB3B3", // Reds/Pinks
+          "#FFD166",
+          "#FFDE8D", // Yellows
+          "#A0E7E5",
+          "#B5F2EA", // Blues
+          "#C5A3FF",
+          "#D9B8FF", // Purples
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+
+      function lightenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = ((num >> 8) & 0x00ff) + amt;
+        const B = (num & 0x0000ff) + amt;
+
+        return (
+          "#" +
+          (
+            0x1000000 +
+            (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+            (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+            (B < 255 ? (B < 1 ? 0 : B) : 255)
+          )
+            .toString(16)
+            .slice(1)
+        );
+      }
+
+      function darkenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) - amt;
+        const G = ((num >> 8) & 0x00ff) - amt;
+        const B = (num & 0x0000ff) - amt;
+
+        return (
+          "#" +
+          (
+            0x1000000 +
+            (R > 0 ? (R < 255 ? R : 255) : 0) * 0x10000 +
+            (G > 0 ? (G < 255 ? G : 255) : 0) * 0x100 +
+            (B > 0 ? (B < 255 ? B : 255) : 0)
+          )
+            .toString(16)
+            .slice(1)
+        );
+      }
+    </script>
+  </body>
+</html>

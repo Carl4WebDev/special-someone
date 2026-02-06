@@ -125,7 +125,7 @@
   </head>
   <body>
     <div id="container">
-      <h1>Happy Mother's Day 😊<span class="heart">♥</span></h1>
+      <h1>Happy Valentines😊<span class="heart">♥</span></h1>
       <button id="flowerButton">Click for a Surprise!</button>
       <canvas id="flowerCanvas" class="hidden"></canvas>
       <div id="message"></div>
@@ -148,28 +148,29 @@
       resizeCanvas();
       window.addEventListener("resize", resizeCanvas);
 
-      const romanticMessages = [
-        "🌷 Mom, you're the reason I bloom. Happy Mother's Day! 🌸",
-        "💝 To the world, you're a mom. To me, you're the world. 🌎",
-        "😆 Roses are red, parenting is tough... but you're still kinda cool! 🌹👑",
-        "✨ Proof that 'mom magic' is real - you made it look easy! 🎩🐇",
-        "🌱 For the woman who planted kindness and grew a forest of love. 🌳💕",
-        "🕰️ The older I get, the more I realize how much you've shaped who I am. 👩‍👧‍👦",
-        "⚡ A mother's love is the fuel that enables ordinary people to do extraordinary things. 🦸‍♀️",
-        "🏡 You're my first home, my safe place, and my forever friend. 🤗",
-        "🙈 Thanks for not giving me away when I was a teenager! 🙏",
-        "🔘 Happy Mother's Day to the woman who still knows how to push all my buttons! 😂❤️",
-        "☀️ Like flowers need sunshine, I need you. 🌻",
-        "🦸‍♀️ Superheroes wear capes, but the real ones are called Mom. 💪",
-        "💞 Mom, you're my always. ⏳",
-        "👵👧 Remember when you held my hand to cross the street? Now I hold yours through life. 🚦",
-        "🩹 From skinned knees to broken hearts - you've fixed them all. 💊",
-        "🎶 Your lullabies still echo in my heart. 🎵",
-        "👶 Watching you become a mom has been my greatest joy. 🥹",
-        "🍀 Your baby is lucky to have you - I know I am! 🤱",
-        "💐 A bouquet of thanks for all you've done! 🌺",
-        "🎬 You made motherhood look easy (even though I know it wasn't). 🎥",
-      ];
+const romanticMessages = [
+  "❤️ Every day with you feels like Valentine’s Day.",
+  "💘 To the world you’re just someone, but to me you’re everything.",
+  "😆 Roses are red, love is wild… and somehow you still chose me. 🌹",
+  "✨ Loving you is my favorite kind of magic. ✨",
+  "🌹 You didn’t just steal my heart—you made it your home.",
+  "🕰️ The more time passes, the deeper I fall for you.",
+  "⚡ Your love turns ordinary moments into something unforgettable.",
+  "🏡 Wherever you are is where I belong.",
+  "🙈 I still get butterflies… and I’m not complaining.",
+  "😂 You know exactly how to push my buttons—and I love that about you.",
+  "☀️ You’re the warmth I didn’t know I was missing.",
+  "🦸‍♀️ Loving you makes me feel invincible.",
+  "💞 You’re my always, my forever, my choice.",
+  "🤝 From holding hands to holding dreams—I'm all in with you.",
+  "🩹 You heal me in ways you don’t even realize.",
+  "🎶 Every love song finally makes sense because of you.",
+  "🥹 Falling for you was the easiest thing I’ve ever done.",
+  "🍀 Loving you feels like winning the lottery every day.",
+  "💐 All my love, wrapped up just for you.",
+  "🎬 Our story is my favorite one to live.",
+];
+
 
       button.addEventListener("click", function () {
         // Show the canvas
